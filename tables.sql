@@ -51,6 +51,7 @@ CREATE TABLE Fornecedores (
 CREATE TABLE Produtos (
     id_produto SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
     descricao TEXT,
     preco NUMERIC(10,2) NOT NULL,
     id_categoria INT,
@@ -122,6 +123,7 @@ CREATE TABLE Entregas (
 -- Tabela de Descontos
 CREATE TABLE Descontos (
     id_desconto SERIAL PRIMARY KEY,
+    id_produto INT,
     codigo VARCHAR(20) UNIQUE NOT NULL,
     descricao TEXT,
     porcentagem NUMERIC(10,2) NOT NULL,
@@ -130,8 +132,10 @@ CREATE TABLE Descontos (
     data_fim DATE,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     atualizado_em TIMESTAMP,
-    criado_por VARCHAR(100)
+    criado_por VARCHAR(100),
+    CONSTRAINT fk_desconto_produto FOREIGN KEY (id_produto) REFERENCES Produtos(id_produto)
 );
+
 
 -- Tabela de Atendimento ao Cliente
 CREATE TABLE AtendimentoCliente (
